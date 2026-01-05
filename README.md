@@ -15,7 +15,23 @@ pnpm add @evelocore/anti-devtools
 
 ## Usage
 
-### Vanilla JS
+### HTML / CDN (Browser)
+
+```html
+<script type="module">
+  import { AntiDevtools } from 'https://cdn.jsdelivr.net/npm/@evelocore/anti-devtools/dist/index.mjs';
+
+  const anti = new AntiDevtools({
+    ondevtoolopen: () => {
+      alert('DevTools detected!');
+      window.location.href = "about:blank";
+    },
+    interval: 500
+  });
+</script>
+```
+
+### Vanilla JS (Bundler)
 
 ```javascript
 import { AntiDevtools } from '@evelocore/anti-devtools';

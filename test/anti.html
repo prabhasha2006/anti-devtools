@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <!-- Disable DevTools Library (Custom Local) -->
-    <script src="anti-devtools.js"></script>
+    <!-- Script injected at bottom of body as module -->
 
     <style>
         :root {
@@ -170,17 +170,15 @@
         <h3 id="ab"></h3>
     </div>
 
-    <script>
-        AntiDevtools({
+    <script type="module">
+        import { AntiDevtools } from 'https://cdn.jsdelivr.net/npm/@evelocore/anti-devtools/dist/index.mjs';
+
+        const anti = new AntiDevtools({
             ondevtoolopen: () => {
-                //alert('DevTools detected!');
-                //document.body.innerHTML = '<h1>Access Denied</h1>';
                 aa.innerText = 'DevTools opened';
             },
-            ondevtoolclose: () => {
-                aa.innerText = 'DevTools closed';
-            }
-        })
+            interval: 500
+        });
     </script>
 </body>
 

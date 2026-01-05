@@ -1,6 +1,6 @@
 {
     "name": "@evelocore/anti-devtools",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Advanced detection and prevention of DevTools usage and userscript injection for web applications.",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
@@ -31,7 +31,7 @@
         "security",
         "anti-devtools",
         "devtools-detect",
-        "userscript-detect"
+        "devtools-blocker"
     ],
     "author": "Evelocore",
     "repository": {
