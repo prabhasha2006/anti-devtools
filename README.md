@@ -1,2 +1,89 @@
 # anti-devtools
-Detect when browser DevTools is opened and trigger custom actions - redirect, alert, or block access to protect your web application
+
+Advanced detection and prevention of DevTools usage for web applications.
+Supports Vanilla JS, React, and Vue.
+
+## Installation
+
+```bash
+npm install anti-devtools
+# or
+yarn add anti-devtools
+# or
+pnpm add anti-devtools
+```
+
+## Usage
+
+### Vanilla JS
+
+```javascript
+import { AntiDevtools } from 'anti-devtools';
+
+const anti = new AntiDevtools({
+  ondevtoolopen: () => {
+    console.log('DevTools opened!');
+    // Redirect or clear content
+    window.location.href = "about:blank";
+  },
+  ondevtoolclose: () => {
+    console.log('DevTools closed');
+  },
+  interval: 500 // check interval in ms
+});
+
+// To stop detection
+// anti.destroy();
+```
+
+### React
+
+```tsx
+import { useAntiDevtools } from 'anti-devtools/react';
+
+function App() {
+  useAntiDevtools({
+    ondevtoolopen: () => {
+      alert('DevTools detected!');
+    }
+  });
+
+  return (
+    <div>
+      <h1>Protected App</h1>
+    </div>
+  );
+}
+```
+
+### Vue
+
+```vue
+<script setup>
+import { useAntiDevtools } from 'anti-devtools/vue';
+
+useAntiDevtools({
+  ondevtoolopen: () => {
+    alert('DevTools detected!');
+  }
+});
+</script>
+
+<template>
+  <h1>Protected App</h1>
+</template>
+```
+
+## Configuration
+
+| Option | Type | Default | Description |
+|Params|Type|Default|Description|
+|---|---|---|---|
+| `ondevtoolopen` | `() => void` | `window.location.href = "about:blank"` | Callback when DevTools is detected opening. |
+| `ondevtoolclose` | `() => void` | `undefined` | Callback when DevTools is detected closing. |
+| `interval` | `number` | `500` | Detection check interval in milliseconds. |
+| `clearIntervalWhenDevOpenTrigger` | `boolean` | `false` | Stop checking after first detection. |
+
+## License
+
+ISC

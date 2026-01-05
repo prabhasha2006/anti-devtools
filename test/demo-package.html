@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Devtools Package Demo</title>
+</head>
+
+<body>
+    <h1>Anti-Devtools Package Demo</h1>
+    <p>Status: <span id="status">Active</span></p>
+    <div id="log"></div>
+
+    <script type="module">
+        import { AntiDevtools } from '../dist/index.mjs';
+
+        const log = (msg) => {
+            const div = document.createElement('div');
+            div.textContent = `${new Date().toLocaleTimeString()} - ${msg}`;
+            document.getElementById('log').appendChild(div);
+        };
+
+        log('Initializing AntiDevtools...');
+
+        const anti = new AntiDevtools({
+            ondevtoolopen: () => {
+                log('DevTools OPENED!');
+                document.getElementById('status').textContent = 'DevTools Detected!';
+                document.getElementById('status').style.color = 'red';
+                // optional: custom logic
+                // window.location.href = "about:blank";
+            },
+            ondevtoolclose: () => {
+                log('DevTools CLOSED');
+                document.getElementById('status').textContent = 'Active';
+                document.getElementById('status').style.color = 'black';
+            }
+        });
+
+        // Expose to window for testing
+        window.antiInstance = anti;
+    </script>
+</body>
+
+</html>
