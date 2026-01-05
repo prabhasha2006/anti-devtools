@@ -6,7 +6,7 @@
         ondevtoolclose: null,
         interval: 500,
         clearIntervalWhenDevOpenTrigger: false,
-    };
+    }
 
     // Configuration method exposed to the global scope
     window.AntiDevtools = function (options) {
@@ -15,9 +15,9 @@
                 if (config.hasOwnProperty(key)) {
                     config[key] = options[key];
                 }
-            });
+            })
         }
-    };
+    }
 
     let isDevToolOpen = false;
     let intervalId = null;
@@ -53,38 +53,17 @@
         
         Object.defineProperty(element, 'id', {
             get: function () {
-                detected = true;
-                triggerOpen();
-                return 'devtools-detector';
+                detected = true
+                triggerOpen()
+                return 'devtools-detector'
             }
-        });
+        })
 
         // Use console.dir for better property inspection
-        console.dir(element);
-        console.clear();
+        console.dir(element)
+        console.clear()
         
-        return detected;
-    }
-
-    /**
-     * Method 2: RegExp toString Detection
-     * DevTools changes the behavior of RegExp.toString
-     */
-    function regexpDetection() {
-        const reg = /./;
-        let detected = false;
-        
-        const originalToString = reg.toString;
-        reg.toString = function() {
-            detected = true;
-            triggerOpen();
-            return originalToString.call(this);
-        };
-        
-        console.log(reg);
-        console.clear();
-        
-        return detected;
+        return detected
     }
 
     /**
