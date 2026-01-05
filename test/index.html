@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Content | DevTools Disabled</title>
+    <!-- Google Fonts for Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Disable DevTools Library (Custom Local) -->
+    <script src="anti-devtools.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0d0d12;
+            --card-bg: #16161e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0b0;
+            --accent-color: #6366f1;
+            /* Indigo */
+            --accent-glow: rgba(99, 102, 241, 0.4);
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-image: radial-gradient(circle at 50% 0%, #1e1e2e 0%, var(--bg-color) 70%);
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            text-align: center;
+            max-width: 480px;
+            width: 90%;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .icon-container {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.05));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .icon-container svg {
+            width: 40px;
+            height: 40px;
+            color: var(--accent-color);
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to right, #fff, #a0a0b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 20px;
+            color: #34d399;
+            /* Emerald 400 */
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .status-badge.active::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background-color: #34d399;
+            border-radius: 50%;
+            display: block;
+            box-shadow: 0 0 10px #34d399;
+        }
+
+        .try-it {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-family: 'Fira Code', monospace;
+            color: var(--accent-color);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Ambient Glow in background */
+        .glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--accent-color);
+            filter: blur(140px);
+            opacity: 0.15;
+            z-index: -1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glow"></div>
+
+    <div class="container">
+        <div class="icon-container">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+        </div>
+
+        <div class="status-badge active">Protection Active</div>
+
+        <h1 id="aa">DevTools Blocked</h1>
+
+        <p>This page is protected using <strong>disable-devtool</strong>. Right-click, F12, and other inspection methods
+            are disabled.</p>
+
+        <div class="try-it">
+            Try pressing <code>F12</code> or <code>Right Click</code>
+        </div>
+    </div>
+
+    <script>
+        AntiDevtools({
+            ondevtoolopen: () => {
+                //alert('DevTools detected!');
+                //document.body.innerHTML = '<h1>Access Denied</h1>';
+                aa.innerText = 'DevTools opened';
+            },
+            ondevtoolclose: () => {
+                console.log('DevTools closed');
+            },
+            onScriptInjection: (details) => {
+                console.warn('Extension detected:', details);
+                // details contains: method, element, src, content, timestamp, etc.
+                alert('Browser extension blocked!');
+            },
+            detectExtensions: true,
+            interval: 1000
+        });
+    </script>
+</body>
+
+</html>
