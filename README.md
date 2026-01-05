@@ -6,11 +6,11 @@ Supports Vanilla JS, React, and Vue.
 ## Installation
 
 ```bash
-npm install anti-devtools
+npm install @evelocore/anti-devtools
 # or
-yarn add anti-devtools
+yarn add @evelocore/anti-devtools
 # or
-pnpm add anti-devtools
+pnpm add @evelocore/anti-devtools
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ pnpm add anti-devtools
 ### Vanilla JS
 
 ```javascript
-import { AntiDevtools } from 'anti-devtools';
+import { AntiDevtools } from '@evelocore/anti-devtools';
 
 const anti = new AntiDevtools({
   ondevtoolopen: () => {
@@ -39,7 +39,7 @@ const anti = new AntiDevtools({
 ### React
 
 ```tsx
-import { useAntiDevtools } from 'anti-devtools/react';
+import { useAntiDevtools } from '@evelocore/anti-devtools/react';
 
 function App() {
   useAntiDevtools({
@@ -60,7 +60,7 @@ function App() {
 
 ```vue
 <script setup>
-import { useAntiDevtools } from 'anti-devtools/vue';
+import { useAntiDevtools } from '@evelocore/anti-devtools/vue';
 
 useAntiDevtools({
   ondevtoolopen: () => {
@@ -87,3 +87,8 @@ useAntiDevtools({
 ## License
 
 ISC
+
+## Author
+
+[Evelocore](https://evelocore.com)
+
