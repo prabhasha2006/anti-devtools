@@ -1,200 +1,541 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Content | DevTools Disabled</title>
-    <!-- Google Fonts for Premium Typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Disable DevTools Library (Custom Local) -->
-    <script src="anti-devtools.js"></script>
-
+    <title>All Scripts Running - Checker</title>
     <style>
-        :root {
-            --bg-color: #0d0d12;
-            --card-bg: #16161e;
-            --text-primary: #e0e0e0;
-            --text-secondary: #a0a0b0;
-            --accent-color: #6366f1;
-            /* Indigo */
-            --accent-glow: rgba(99, 102, 241, 0.4);
-            --danger: #ef4444;
-        }
-
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background-image: radial-gradient(circle at 50% 0%, #1e1e2e 0%, var(--bg-color) 70%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
         }
 
         .container {
-            background-color: var(--card-bg);
-            padding: 3rem;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
-            text-align: center;
-            max-width: 480px;
-            width: 90%;
-            position: relative;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        .icon-container {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.05));
-            border-radius: 50%;
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+        }
+
+        .refresh-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        .icon-container svg {
-            width: 40px;
-            height: 40px;
-            color: var(--accent-color);
-        }
-
-        h1 {
-            font-weight: 700;
-            font-size: 2rem;
-            margin-bottom: 0.75rem;
-            letter-spacing: -0.02em;
-            background: linear-gradient(to right, #fff, #a0a0b0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 2rem;
-            font-size: 1.05rem;
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
             gap: 8px;
-            padding: 8px 16px;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            border-radius: 20px;
-            color: #34d399;
-            /* Emerald 400 */
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+            transition: background 0.3s;
         }
 
-        .status-badge.active::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background-color: #34d399;
-            border-radius: 50%;
-            display: block;
-            box-shadow: 0 0 10px #34d399;
+        .refresh-btn:hover {
+            background: #5568d3;
         }
 
-        .try-it {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
-        code {
-            background: rgba(0, 0, 0, 0.3);
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .value {
+            color: #333;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .script-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .script-item.extension {
+            border-left-color: #dc3545;
+        }
+
+        .script-item.userscript {
+            border-left-color: #ffc107;
+        }
+
+        .script-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .script-index {
+            background: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .badge {
             padding: 4px 8px;
-            border-radius: 6px;
-            font-family: 'Fira Code', monospace;
-            color: var(--accent-color);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
         }
 
-        /* Ambient Glow in background */
-        .glow {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: var(--accent-color);
-            filter: blur(140px);
-            opacity: 0.15;
-            z-index: -1;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
+        .badge.extension {
+            background: #dc3545;
+            color: white;
+        }
+
+        .badge.userscript {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .badge.inline {
+            background: #28a745;
+            color: white;
+        }
+
+        .badge.async {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .script-src {
+            color: #0066cc;
+            font-family: monospace;
+            word-break: break-all;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .script-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .script-details div {
+            color: #666;
+        }
+
+        .script-details strong {
+            color: #333;
+        }
+
+        .script-preview {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .api-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .api-badge {
+            background: #28a745;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: monospace;
+        }
+
+        .gm-info {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .gm-info pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 12px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+
+        .prop-item {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+
+        .no-data {
+            color: #999;
+            font-style: italic;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .alert {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 4px solid #dc3545;
+            margin-bottom: 15px;
         }
     </style>
 </head>
-
 <body>
-
-    <div class="glow"></div>
-
     <div class="container">
-        <div class="icon-container">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
+        <div class="header">
+            <h1>🔍 All Scripts Running on This Page</h1>
+            <button class="refresh-btn" onclick="checkAllScripts()">
+                🔄 Refresh
+            </button>
         </div>
 
-        <div class="status-badge active">Protection Active</div>
+        <div class="stats" id="stats"></div>
 
-        <h1 id="aa">DevTools Blocked</h1>
+        <div class="section">
+            <h2>ℹ️ Why Userscript Content Doesn't Show</h2>
+            <div style="background: #e7f3ff; padding: 15px; border-radius: 8px; border-left: 4px solid #0066cc;">
+                <p style="margin-bottom: 10px;"><strong>Tampermonkey/Greasemonkey run scripts in an isolated scope for security:</strong></p>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>Scripts execute in a separate JavaScript context</li>
+                    <li>Script content is NOT added to the page's DOM</li>
+                    <li>This prevents page scripts from accessing/modifying userscripts</li>
+                    <li>This prevents userscripts from being detected by the website</li>
+                    <li>Only GM APIs (like GM_info) are exposed to the page context</li>
+                </ul>
+                <p style="margin-top: 10px; color: #666;"><strong>To view userscript source:</strong> Open Tampermonkey dashboard → Click on your script → View code there</p>
+            </div>
+        </div>
 
-        <p>This page is protected using <strong>disable-devtool</strong>. Right-click, F12, and other inspection methods
-            are disabled.</p>
+        <div class="section">
+            <h2>📜 All Script Elements</h2>
+            <div id="scripts-list"></div>
+        </div>
 
-        <div class="try-it">
-            Try pressing <code>F12</code> or <code>Right Click</code>
+        <div class="section">
+            <h2>🔧 Userscript Manager APIs Detected</h2>
+            <div id="gm-apis"></div>
+        </div>
+
+        <div class="section">
+            <h2>📋 GM_info Details</h2>
+            <div id="gm-info"></div>
+        </div>
+
+        <div class="section">
+            <h2>⚠️ Suspicious Window Properties</h2>
+            <div id="suspicious-props"></div>
         </div>
     </div>
 
     <script>
-        AntiDevtools({
-            ondevtoolopen: () => {
-                //alert('DevTools detected!');
-                //document.body.innerHTML = '<h1>Access Denied</h1>';
-                aa.innerText = 'DevTools opened';
-            },
-            ondevtoolclose: () => {
-                console.log('DevTools closed');
-            },
-            onScriptInjection: (details) => {
-                console.warn('Extension detected:', details);
-                // details contains: method, element, src, content, timestamp, etc.
-                alert('Browser extension blocked!');
-            },
-            detectExtensions: true,
-            interval: 1000
-        });
+        function checkAllScripts() {
+            // Get all script elements
+            const scripts = document.querySelectorAll('script');
+            const scriptsList = document.getElementById('scripts-list');
+            scriptsList.innerHTML = '';
+
+            let extensionCount = 0;
+            let userscriptCount = 0;
+            let inlineCount = 0;
+
+            // Check if Tampermonkey is running but scripts aren't in DOM
+            if (typeof GM_info !== 'undefined') {
+                try {
+                    const gmScript = document.createElement('div');
+                    gmScript.className = 'script-item userscript';
+                    gmScript.innerHTML = `
+                        <div class="script-header">
+                            <span class="script-index">TM</span>
+                            <span class="badge userscript">TAMPERMONKEY/GREASEMONKEY</span>
+                        </div>
+                        <div class="script-src">🔒 Running in isolated scope (not visible in DOM)</div>
+                        <div class="alert" style="margin-top: 10px;">
+                            ⚠️ Userscript manager detected but script content is hidden. Tampermonkey runs scripts in an isolated environment separate from the page's DOM for security.
+                        </div>
+                        <div class="script-details">
+                            <div><strong>Script Name:</strong> ${GM_info.script?.name || 'Unknown'}</div>
+                            <div><strong>Version:</strong> ${GM_info.script?.version || 'Unknown'}</div>
+                            <div><strong>Manager:</strong> ${GM_info.scriptHandler || 'Unknown'}</div>
+                            <div><strong>Grants:</strong> ${GM_info.script?.grants?.length || 0}</div>
+                        </div>
+                        ${GM_info.script?.description ? `
+                            <div style="margin-top: 10px; padding: 10px; background: #fff3cd; border-radius: 6px;">
+                                <strong>Description:</strong> ${GM_info.script.description}
+                            </div>
+                        ` : ''}
+                    `;
+                    scriptsList.appendChild(gmScript);
+                    userscriptCount++;
+                } catch (e) {
+                    console.error('Error reading GM_info:', e);
+                }
+            }
+
+            scripts.forEach((script, index) => {
+                const content = script.textContent || '';
+                const src = script.src || '';
+                const isExtension = src.includes('chrome-extension://') || 
+                                  src.includes('moz-extension://') ||
+                                  src.includes('safari-extension://');
+                const isUserscript = content.includes('==UserScript==') || 
+                                   content.includes('@grant');
+                const isInline = !src;
+
+                if (isExtension) extensionCount++;
+                if (isUserscript) userscriptCount++;
+                if (isInline) inlineCount++;
+
+                const scriptDiv = document.createElement('div');
+                scriptDiv.className = `script-item ${isExtension ? 'extension' : ''} ${isUserscript ? 'userscript' : ''}`;
+                
+                let badges = '';
+                if (isExtension) badges += '<span class="badge extension">EXTENSION</span>';
+                if (isUserscript) badges += '<span class="badge userscript">USERSCRIPT</span>';
+                if (isInline) badges += '<span class="badge inline">INLINE</span>';
+                if (script.async) badges += '<span class="badge async">ASYNC</span>';
+                if (script.defer) badges += '<span class="badge async">DEFER</span>';
+
+                const noContent = content.length === 0 && !src;
+
+                scriptDiv.innerHTML = `
+                    <div class="script-header">
+                        <span class="script-index">#${index + 1}</span>
+                        ${badges}
+                    </div>
+                    <div class="script-src">${src || '(inline script)'}</div>
+                    <div class="script-details">
+                        <div><strong>Type:</strong> ${script.type || 'text/javascript'}</div>
+                        <div><strong>Size:</strong> ${content.length} chars</div>
+                        <div><strong>Async:</strong> ${script.async ? 'Yes' : 'No'}</div>
+                        <div><strong>Defer:</strong> ${script.defer ? 'Yes' : 'No'}</div>
+                    </div>
+                    ${noContent ? `
+                        <div class="alert" style="margin-top: 10px;">
+                            ⚠️ Script element found but content is empty. This might be a userscript running in isolated scope or a placeholder element.
+                        </div>
+                    ` : ''}
+                    ${content.length > 0 && content.length < 5000 ? `
+                        <div class="script-preview">${escapeHtml(content.substring(0, 500))}${content.length > 500 ? '...' : ''}</div>
+                    ` : content.length >= 5000 ? `
+                        <div class="alert" style="margin-top: 10px;">
+                            📄 Script too large to display (${content.length} characters)
+                        </div>
+                    ` : ''}
+                `;
+                scriptsList.appendChild(scriptDiv);
+            });
+
+            // Update stats
+            document.getElementById('stats').innerHTML = `
+                <div class="stat-card">
+                    <h3>Total Scripts</h3>
+                    <div class="value">${scripts.length}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Extension Scripts</h3>
+                    <div class="value" style="color: #dc3545;">${extensionCount}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Userscripts</h3>
+                    <div class="value" style="color: #ffc107;">${userscriptCount}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Inline Scripts</h3>
+                    <div class="value" style="color: #28a745;">${inlineCount}</div>
+                </div>
+            `;
+
+            // Check for GM APIs
+            checkGMApis();
+
+            // Check for GM_info
+            checkGMInfo();
+
+            // Check suspicious properties
+            checkSuspiciousProps();
+        }
+
+        function checkGMApis() {
+            const apis = [
+                'GM_info', 'GM', 'unsafeWindow', 'GM_xmlhttpRequest', 
+                'GM_getValue', 'GM_setValue', 'GM_addStyle', 'GM_addElement',
+                'GM_deleteValue', 'GM_listValues', 'GM_getResourceText',
+                'GM_getResourceURL', 'GM_registerMenuCommand', 'GM_unregisterMenuCommand',
+                'GM_openInTab', 'GM_setClipboard', 'GM_notification',
+                'GM_addValueChangeListener', 'GM_removeValueChangeListener',
+                'GM_download', 'GM_getTab', 'GM_saveTab', 'GM_getTabs',
+                'cloneInto', 'exportFunction'
+            ];
+
+            const found = [];
+            apis.forEach(api => {
+                if (typeof window[api] !== 'undefined') {
+                    found.push(api);
+                }
+            });
+
+            const apisDiv = document.getElementById('gm-apis');
+            if (found.length > 0) {
+                apisDiv.innerHTML = `
+                    <div class="alert">⚠️ Tampermonkey/Greasemonkey detected! ${found.length} APIs found.</div>
+                    <div class="api-list">
+                        ${found.map(api => `<span class="api-badge">${api}</span>`).join('')}
+                    </div>
+                `;
+            } else {
+                apisDiv.innerHTML = '<div class="no-data">✅ No userscript manager APIs detected</div>';
+            }
+        }
+
+        function checkGMInfo() {
+            const infoDiv = document.getElementById('gm-info');
+            
+            if (typeof GM_info !== 'undefined') {
+                try {
+                    const info = {
+                        scriptHandler: GM_info.scriptHandler,
+                        version: GM_info.version,
+                        script: GM_info.script ? {
+                            name: GM_info.script.name,
+                            namespace: GM_info.script.namespace,
+                            version: GM_info.script.version,
+                            description: GM_info.script.description,
+                            author: GM_info.script.author,
+                            matches: GM_info.script.matches,
+                            grants: GM_info.script.grants,
+                            runAt: GM_info.script['run-at']
+                        } : null
+                    };
+
+                    infoDiv.innerHTML = `
+                        <div class="alert">⚠️ GM_info object found!</div>
+                        <div class="gm-info">
+                            <pre>${JSON.stringify(info, null, 2)}</pre>
+                        </div>
+                    `;
+                } catch (e) {
+                    infoDiv.innerHTML = `<div class="alert">⚠️ GM_info exists but error reading: ${e.message}</div>`;
+                }
+            } else {
+                infoDiv.innerHTML = '<div class="no-data">✅ No GM_info found</div>';
+            }
+        }
+
+        function checkSuspiciousProps() {
+            const propsDiv = document.getElementById('suspicious-props');
+            const allProps = Object.getOwnPropertyNames(window);
+            const suspicious = allProps.filter(prop => {
+                const lower = prop.toLowerCase();
+                return prop.startsWith('GM_') || 
+                       lower.includes('tampermonkey') ||
+                       lower.includes('greasemonkey') ||
+                       lower.includes('violentmonkey') ||
+                       lower.includes('userscript') ||
+                       prop.startsWith('__tm') ||
+                       prop.startsWith('__gm') ||
+                       prop === '__REACT_DEVTOOLS_GLOBAL_HOOK__' ||
+                       prop === '__VUE_DEVTOOLS_GLOBAL_HOOK__' ||
+                       prop === '__REDUX_DEVTOOLS_EXTENSION__';
+            });
+
+            if (suspicious.length > 0) {
+                propsDiv.innerHTML = `
+                    <div class="alert">⚠️ Found ${suspicious.length} suspicious properties on window object</div>
+                    ${suspicious.map(prop => `
+                        <div class="prop-item">
+                            <strong>${prop}</strong>: ${typeof window[prop]}
+                        </div>
+                    `).join('')}
+                `;
+            } else {
+                propsDiv.innerHTML = '<div class="no-data">✅ No suspicious properties found</div>';
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Run on load
+        checkAllScripts();
+
+        // Auto-refresh every 2 seconds
+        setInterval(checkAllScripts, 2000);
     </script>
 </body>
-
 </html>
